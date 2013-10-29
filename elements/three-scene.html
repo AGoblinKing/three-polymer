@@ -1,0 +1,45 @@
+<link rel="import" href="three-camera.html"/>
+<link rel="import" href="three-mesh.html"/>
+
+<script src="vendor/three.js"></script>   
+
+<polymer-element name="three-scene" attributes="width height">
+    <template>
+        <style>
+            @host { display: block; }
+        </style>
+    </template>
+
+    <script>
+        Polymer("three-scene", {
+            created: function() {
+                this.renderer = new THREE.WebGLRenderer();
+                this.scene = new THREE.Scene();
+            },
+            ready: function() {
+                this.appendChild(this.renderer.domElement);
+                this.children.forEach(function(child) {
+                    this.scene.add(child);
+                }.bind(this));
+                
+                this.camera = this.querySelector("three-camera");
+                
+                this._lastRender = (new Date()).getTime();
+                this.render();
+            },
+            render: function() {
+                var newTime = (new Date()).getTime(),
+                    delta = this._lastRender - newTime;
+                
+                this.children.forEach(function(child) {
+                    child.fire("tick", delta);
+                });
+                
+                this.renderer.render(this.scene, this.camera.three);
+                
+                this._lastRender = newTime;
+                requestAnimationFrame(this.render.bind(this));
+            }
+        });
+    </script>
+</polymer-element>

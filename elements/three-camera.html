@@ -1,0 +1,14 @@
+<polymer-element name="three-camera" attributes="near far angle aspect" constructor="ThreeCamera" extends="three-object3d">
+    <script>
+        Polymer("three-camera", function() {
+            near: 0.1,
+            far: 10000,
+            angle: 45,
+            aspect: window.innerWidth / window.innerHeight, 
+            created: function() {
+                this.three = new THREE.PerspectiveCamera(this.angle, this.aspect, this.near, this.far);
+                this.super();
+            }
+        });
+    </script>
+</polymer-element>
