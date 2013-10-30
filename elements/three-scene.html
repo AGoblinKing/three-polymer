@@ -34,11 +34,11 @@
             },
             render: function() {
                 var newTime = (new Date()).getTime(),
-                    delta = this._lastRender - newTime;
+                    delta = newTime - this._lastRender;
                 
                 for(var i = 0; i < this.children.length; i++) {
-                    if(this.children[i].fire) {
-                        this.children[i].fire("tick", delta);
+                    if(this.children[i].tick) {
+                        this.children[i].tick(delta);
                     }
                 };
                 

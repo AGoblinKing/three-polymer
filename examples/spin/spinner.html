@@ -1,0 +1,17 @@
+<polymer-element name="game-spinner" extends="three-mesh" id="foo">
+    <template>
+        <three-sphere radius="5" segments="16" rings="16"></three-sphere>
+        <three-meshmaterial type="basic" color="0x0000CC"></three-meshmaterial>
+    </template>
+    <script>
+        Polymer("game-spinner", {
+            tick: function(delta) {
+                this.three.rotation.x += delta;            
+            },
+            enteredView: function() {
+                debugger;  
+            }
+        });
+    </script>
+
+</polymer-element>

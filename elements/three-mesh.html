@@ -1,11 +1,7 @@
 <polymer-element name="three-mesh" attributes="geometry material" extends="three-object3d">
     <script>      
         Polymer("three-mesh", {
-            ready: function() {
-                if(!this.three) {
-                    this.three = new THREE.Mesh();
-                }
-                
+            setMats: function() {
                 for(var i = 0; i < this.children.length; i++) {
                     var child = this.children[i];
                     if(child.three) {
@@ -15,8 +11,15 @@
                             this.three.geometry = child.three;
                         }
                     }
+                }  
+            },
+            ready: function() {
+                if(!this.three) {
+                    this.three = new THREE.Mesh();
                 }
-                
+                // Gah templates haven't been inserted at this point.
+                this.setMats();
+                            
                 this.super();
             },
             geometryChanged: function() {
