@@ -5,18 +5,20 @@
             far: 10000,
             angle: 45,
             aspect: window.innerWidth / window.innerHeight, 
-            created: function() {
+            ready: function() {
                 this.three = new THREE.PerspectiveCamera(this.angle, this.aspect, this.near, this.far);
                 this.super();
-            },
-            ready: function() {
-                this.lookAt && (this._lookAt());             
+                
+                var self = this;
+                setTimeout(function() {
+                    self.lookAt && (self._lookAt());
+                }, 0);
             },
             _lookAt: function() {
                 var target = document.getElementById(this.lookAt);
-                
+
                 if(target && target.three) {
-                    this.three.lookAt(three.position);
+                    this.three.lookAt(target.three.position);
                 }
             }
         });

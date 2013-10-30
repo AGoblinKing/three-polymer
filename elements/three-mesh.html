@@ -1,7 +1,7 @@
 <polymer-element name="three-mesh" attributes="geometry material" extends="three-object3d">
     <script>      
         Polymer("three-mesh", {
-            created: function() {
+            ready: function() {
                 if(!this.three) {
                     this.three = new THREE.Mesh();
                 }
@@ -16,6 +16,8 @@
                         }
                     }
                 }
+                
+                this.super();
             },
             geometryChanged: function() {
                 this.three.geometry = document.getElementById(this.geometry).three;

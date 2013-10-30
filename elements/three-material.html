@@ -1,7 +1,7 @@
 <polymer-element name="three-material" attributes="side visible alphaTest overdraw polygonOffsetFactor polygonOffsetUnits depthWrite depthTest blendEquation blendDst blending blendSrc opacity transparent">
     <script>      
         Polymer("three-material", {
-            created: function() {
+            ready: function() {
                 if(!this.three) {
                     this.three = new THREE.Material();
                 }

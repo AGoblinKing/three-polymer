@@ -17,10 +17,12 @@
                         this.three.remove(nodes[i].three);
                 }
             },
-            created: function() {
+            ready: function() {
                 if(!this.three) {
                     this.three = new THREE.Object3D();
                 }
+                
+                ["x", "y", "z"].forEach(POLYTHREE.bindAttrib.bind(this, this, this.three.position));
                 
                 var self = this;
                 this.observer = new MutationObserver(function(mutations) {
@@ -30,9 +32,7 @@
                     });
                 });
                 this.observer.observe(this, {childList: true});
-                ["x", "y", "z"].forEach(POLYTHREE.bindAttrib.bind(this, this, this.three.position));
-            },
-            ready: function() {
+                
                 this.addNodes(this.children);
             }
         });

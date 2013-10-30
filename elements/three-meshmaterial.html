@@ -1,8 +1,8 @@
 <polymer-element name="three-meshmaterial" attributes="color wireframe wireframeLinewidth wireframeLinecap wireframeLinejoin shading vertexColors fog type" extends="three-material">
     <script>      
         Polymer("three-meshmaterial", {
-            created: function() {
-                var binders = ["color", "wireframe", "wireframeLinewidth", "wireframeLinecap", "wireframeLinejoin", "shading", "vertexColors", "fog"];
+            ready: function() {
+                var binders = ["wireframe", "wireframeLinewidth", "wireframeLinecap", "wireframeLinejoin", "shading", "vertexColors", "fog"];
                 
                 switch(this.type) {
                     case "basic":
@@ -11,7 +11,11 @@
                 }
                 
                 binders.forEach(POLYTHREE.bindAttrib.bind(this, this, this.three));
+                
                 this.super();
+            },
+            colorChanged: function() {
+                this.three.color.set(POLYTHREE.convert(1, this.color));   
             }
         });
     </script>
