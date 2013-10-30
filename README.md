@@ -1,8 +1,8 @@
-THREE POYLMER
+THREE.js Polymer
 ===============================
-~THREE.js Components powered by Polymer~
+I got inspired by https://github.com/kaosat-dev/polymer-threejs after a game jam of creating https://github.com/SuicidalRobot/SuicidalRobot.
 
-So, I got inspired by https://github.com/kaosat-dev/polymer-threejs after a weekend game jam of creating https://github.com/SuicidalRobot/SuicidalRobot and getting fed up with debug tools. Thus THREE POLYMER was born.
+Thus THREE POLYMER was born.
 
 Features
 ========
