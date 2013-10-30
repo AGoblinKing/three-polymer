@@ -26,6 +26,10 @@ Example
         </three-mesh>
     </three-scene>
     
+Demo
+----
+http://joshgalvin.github.io/three-polymer/
+
 Release
 -------
-???
+... soon
