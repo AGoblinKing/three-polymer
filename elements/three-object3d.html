@@ -1,9 +1,40 @@
-<polymer-element name="object3d">
-
-    <script>
-        Polymer("object3d", function() {
-            
-            
+<polymer-element name="three-object3d" attributes="x y z">
+    <script>      
+        Polymer("three-object3d", {
+            addNodes: function(nodes) {
+                // give polymer a chance to run create on the node
+                var self = this;
+                setTimeout(function() {
+                    for(var i = 0; i < nodes.length; i++) {
+                        if(nodes[i].three && nodes[i].three instanceof THREE.Object3D) 
+                            self.three.add(nodes[i].three);
+                    }
+                }, 0);
+            },
+            removeNodes: function(nodes) {
+                for(var i = 0; i < nodes.length; i++) {
+                    if(nodes[i].three && nodes[i].three instanceof THREE.Object3D) 
+                        this.three.remove(nodes[i].three);
+                }
+            },
+            created: function() {
+                if(!this.three) {
+                    this.three = new THREE.Object3D();
+                }
+                
+                var self = this;
+                this.observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        mutation.addedNodes && (self.addNodes(mutation.addedNodes));
+                        mutation.removedNodes && (self.removeNodes(mutation.removedNodes));
+                    });
+                });
+                this.observer.observe(this, {childList: true});
+                ["x", "y", "z"].forEach(POLYTHREE.bindAttrib.bind(this, this, this.three.position));
+            },
+            ready: function() {
+                this.addNodes(this.children);
+            }
         });
     </script>
 </polymer-element>

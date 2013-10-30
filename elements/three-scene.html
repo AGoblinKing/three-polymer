@@ -1,9 +1,14 @@
-<link rel="import" href="three-camera.html"/>
-<link rel="import" href="three-mesh.html"/>
-
 <script src="vendor/three.js"></script>   
+<script src="utils.js"></script>
 
-<polymer-element name="three-scene" attributes="width height">
+<link rel="import" href="three-object3d.html"/> 
+<link rel="import" href="three-material.html"/> 
+<link rel="import" href="three-mesh.html"/> 
+<link rel="import" href="three-camera.html"/> 
+<link rel="import" href="three-sphere.html"/> 
+<link rel="import" href="three-meshmaterial.html"/> 
+
+<polymer-element name="three-scene" attributes="width height" extends="three-object3d" lightdom>
     <template>
         <style>
             @host { display: block; }
@@ -14,14 +19,14 @@
         Polymer("three-scene", {
             created: function() {
                 this.renderer = new THREE.WebGLRenderer();
-                this.scene = new THREE.Scene();
+                this.renderer.setSize(window.innerWidth, window.innerHeight); 
+                this.three = new THREE.Scene();
+                this.super();
             },
             ready: function() {
-                this.appendChild(this.renderer.domElement);
-                this.children.forEach(function(child) {
-                    this.scene.add(child);
-                }.bind(this));
+                this.super();
                 
+                this.appendChild(this.renderer.domElement);                
                 this.camera = this.querySelector("three-camera");
                 
                 this._lastRender = (new Date()).getTime();
@@ -31,11 +36,13 @@
                 var newTime = (new Date()).getTime(),
                     delta = this._lastRender - newTime;
                 
-                this.children.forEach(function(child) {
-                    child.fire("tick", delta);
-                });
+                for(var i = 0; i < this.children.length; i++) {
+                    if(this.children[i].fire) {
+                        this.children[i].fire("tick", delta);
+                    }
+                };
                 
-                this.renderer.render(this.scene, this.camera.three);
+                this.renderer.render(this.three, this.camera.three);
                 
                 this._lastRender = newTime;
                 requestAnimationFrame(this.render.bind(this));

@@ -1,0 +1,28 @@
+<polymer-element name="three-mesh" attributes="geometry material" extends="three-object3d">
+    <script>      
+        Polymer("three-mesh", {
+            created: function() {
+                if(!this.three) {
+                    this.three = new THREE.Mesh();
+                }
+                
+                for(var i = 0; i < this.children.length; i++) {
+                    var child = this.children[i];
+                    if(child.three) {
+                        if(child.three instanceof THREE.Material) {
+                            this.three.material = child.three;
+                        } else if(child.three instanceof THREE.Geometry) {
+                            this.three.geometry = child.three;
+                        }
+                    }
+                }
+            },
+            geometryChanged: function() {
+                this.three.geometry = document.getElementById(this.geometry).three;
+            },
+            materialChanged: function() {
+                this.three.material = document.getElementById(this.material).three;
+            }
+        });
+    </script>
+</polymer-element>

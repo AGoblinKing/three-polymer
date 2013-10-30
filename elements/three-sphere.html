@@ -1,0 +1,11 @@
+<polymer-element name="three-sphere" attributes="radius widthSegments heightSegments phiStart phiLength thetaStart thetaLength">
+    <script>      
+        Polymer("three-sphere", {
+            created: function() {    
+                if(!this.three) {
+                    this.three = new THREE.SphereGeometry(this.radius, this.widthSegments, this.heightSegments, this.phiStart, this.phiLength, this.thetaStart, this.theLength);
+                }
+            }
+        });
+    </script>
+</polymer-element>
