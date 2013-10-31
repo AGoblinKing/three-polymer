@@ -1,9 +1,11 @@
 <polymer-element name="three-mesh" attributes="geometry material" extends="three-object3d">
     <script>      
         Polymer("three-mesh", {
-            setMats: function() {
-                for(var i = 0; i < this.children.length; i++) {
-                    var child = this.children[i];
+            setMats: function(nodes) {
+                !nodes && (nodes = this.children);
+                
+                for(var i = 0; i < nodes.length; i++) {
+                    var child = nodes[i];
                     if(child.three) {
                         if(child.three instanceof THREE.Material) {
                             this.three.material = child.three;
@@ -13,13 +15,21 @@
                     }
                 }  
             },
+            // templated dom elements are only ever in shadowRoot :(
+            nodesAdded:function(nodes) {
+                this.super(arguments);
+                
+                if(this.shadowRoot)
+                    this.setMats(this.shadowRoot.children);
+                else 
+                    this.setMats();
+            },
             ready: function() {
                 if(!this.three) {
                     this.three = new THREE.Mesh();
                 }
                 // Gah templates haven't been inserted at this point.
                 this.setMats();
-                            
                 this.super();
             },
             geometryChanged: function() {
