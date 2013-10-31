@@ -28,7 +28,7 @@ Example
     
 Demo
 ----
-http://joshgalvin.github.io/three-polymer/
+ * http://joshgalvin.github.io/three-polymer/examples/spinner.html
 
 Release
 -------
