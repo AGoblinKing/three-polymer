@@ -24,12 +24,7 @@ POLYTHREE = {
     bindAttrib: function(from, target, name) {
         from[name] && (target[name] = POLYTHREE.convert(target[name], from[name]));
         
-        
-        // this is going to overwrite the existing property, no good.
-        // Should probably look at using "name"Changed events
-        // Though then they can diverge ... Object.observe? maybe?
-        // or... I could setup the setters/getters to look at some property
-        // and set that later
+        // this won't reflect changes from "from" unless I object.observe it
         from[name+"Changed"] = POLYTHREE.attribChanged.bind(from, target);
     }
 };

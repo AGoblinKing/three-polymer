@@ -18,11 +18,7 @@
             // templated dom elements are only ever in shadowRoot :(
             nodesAdded:function(nodes) {
                 this.super(arguments);
-                
-                if(this.shadowRoot)
-                    this.setMats(this.shadowRoot.children);
-                else 
-                    this.setMats();
+                this.setMats(nodes);
             },
             ready: function() {
                 if(!this.three) {
