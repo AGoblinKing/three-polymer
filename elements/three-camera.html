@@ -4,8 +4,11 @@
             near: 0.1,
             far: 10000,
             angle: 45,
-            aspect: window.innerWidth / window.innerHeight, 
+            aspect:0, 
             ready: function() {
+                if(this.aspect == 0) {
+                    this.aspect = this.parentElement.clientWidth / this.parentElement.clientHeight;
+                }
                 this.three = new THREE.PerspectiveCamera(this.angle, this.aspect, this.near, this.far);
                 this.super();
                 

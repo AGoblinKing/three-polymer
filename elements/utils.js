@@ -14,6 +14,13 @@ POLYTHREE = {
         
         return value;
     },
+    attribChanged: function(target, name, old, newVal) {
+        if(target.hasOwnProperty("needsUpdate")) {
+           target.needsUpdate = true; 
+        }
+        
+        target[name] = POLYTHREE.convert(target[name], value);
+    },
     bindAttrib: function(from, target, name) {
         from[name] && (target[name] = POLYTHREE.convert(target[name], from[name]));
         
@@ -23,17 +30,6 @@ POLYTHREE = {
         // Though then they can diverge ... Object.observe? maybe?
         // or... I could setup the setters/getters to look at some property
         // and set that later
-        Object.defineProperty(from, name, {
-            set: function(value) {
-                if(target.hasOwnProperty("needsUpdate")) {
-                   target.needsUpdate = true; 
-                }
-                
-                target[name] = POLYTHREE.convert(target[name], value);
-            },
-            get: function() {
-                return target[name];
-            }
-        });
+        from[name+"Changed"] = POLYTHREE.attribChanged.bind(from, target);
     }
 };

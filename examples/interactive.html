@@ -1,0 +1,25 @@
+<link rel="import" href="elements/code-mirror/code-mirror.html"/>
+
+<polymer-element name="code-interactive" extends="code-mirror">
+    <script>
+        Polymer("code-interactive", {
+            ready: function() {
+                this.super();
+                this.target = document.getElementById("target");
+                var doc = this.mirror.getDoc();
+                var editor = doc.getEditor();
+                var text = target.innerHTML.replace(/&quot;/g, "\"");
+        
+                doc.setValue(text);
+       
+                var totalLines = editor.lineCount();
+                
+                editor.autoIndentRange({line:0, ch:0}, {line:totalLines, ch:text.length}); 
+            },
+            update: function() {
+                console.log(this.mirror.getDoc().getValue());
+                this.target.innerHTML = this.mirror.getDoc().getValue();   
+            }
+        });
+    </script>
+</polymer-element>

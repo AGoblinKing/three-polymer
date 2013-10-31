@@ -18,14 +18,13 @@
     <script>
         Polymer("three-scene", {
             created: function() {
-                this.renderer = new THREE.WebGLRenderer();
-                this.renderer.setSize(window.innerWidth, window.innerHeight); 
                 this.three = new THREE.Scene();
                 this.super();
             },
             ready: function() {
                 this.super();
-                
+                this.renderer = new THREE.WebGLRenderer();
+                this.renderer.setSize(this.clientWidth, this.clientHeight); 
                 this.appendChild(this.renderer.domElement);                
                 this.camera = this.querySelector("three-camera");
                 
