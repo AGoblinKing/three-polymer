@@ -15,7 +15,7 @@
                     }
                 }  
             },
-            // templated dom elements are only ever in shadowRoot :(
+            // templated dom elements are only ever in shadowRoot but get added later :(
             nodesAdded:function(nodes) {
                 this.super(arguments);
                 this.setMats(nodes);
@@ -24,9 +24,12 @@
                 if(!this.three) {
                     this.three = new THREE.Mesh();
                 }
-                // Gah templates haven't been inserted at this point.
-                this.setMats();
                 this.super();
+                
+                // give child elements a chance to ready up
+                setTimeout(function() {
+                    this.setMats();   
+                }.bind(this), 0);
             },
             geometryChanged: function() {
                 this.three.geometry = document.getElementById(this.geometry).three;

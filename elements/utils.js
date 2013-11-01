@@ -1,6 +1,6 @@
 POLYTHREE = {
     bindConstructor: function(constructor, args) {
-        var factoryFunc = constructor.bind.apply(constructor, args);
+        var factoryFunc = constructor.bind.apply(constructor, [null].concat(args));
         return new factoryFunc();
     },
     convert: function(targetValue, value) {

@@ -2,7 +2,15 @@
     (function() {
         var geoms = {
             "Sphere": ["radius", "widthSegments", "heightSegments", "phiStart", "phiLength", "thetaStart", "thetaLength"],
-            "Cube": []
+            "Circle": ["radius", "segments", "thetaStart", "thetaLength"],
+            "Cube": ["width", "height", "depth", "widthSegments", "heightSegments", "depthSegments"],
+            "Cylinder": ["radiusTop", "radiusBottom", "height", "radiusSegments", "heightSegments", "openEnded"],
+            "Icosahedron": ["radius", "detail"],
+            "Octahedron": ["radius", "detail"],
+            "Plane": ["width", "height", "widthSegments", "heightSegments"],
+            "Tetrahedron": ["radius", "detail"],
+            "Torus": ["radius", "tube", "radialSegments", "tubularSegments"],
+            "TorusKnot": ["radius", "tube", "radialSegments", "tubularSegments", "p", "q", "heightScale"]
         };
         
         Object.keys(geoms).forEach(function(type) {
