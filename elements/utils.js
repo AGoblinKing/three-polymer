@@ -1,4 +1,8 @@
 POLYTHREE = {
+    bindConstructor: function(constructor, args) {
+        var factoryFunc = constructor.bind.apply(constructor, args);
+        return new factoryFunc();
+    },
     convert: function(targetValue, value) {
         if(value.slice(0,2) === "0x") {
             return parseInt(value.slice(2), 16);   

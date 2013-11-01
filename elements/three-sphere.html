@@ -1,20 +1,32 @@
-<polymer-element name="three-sphere" attributes="radius widthSegments heightSegments phiStart phiLength thetaStart thetaLength">
-    <script>
-        (function() {
-            var defaults = new THREE.SphereGeometry(),
-                ThreeSphere = {
-                    ready: function() {    
+<script>
+    (function() {
+        var geoms = {
+            "Sphere": ["radius", "widthSegments", "heightSegments", "phiStart", "phiLength", "thetaStart", "thetaLength"],
+            "Cube": []
+        };
+        
+        Object.keys(geoms).forEach(function(type) {
+            var defaults = new THREE[type+"Geometry"](),
+                GeomPoly = {
+                    args: geoms[type],
+                    type: type,
+                    ready: function() {
                         if(!this.three) {
-                            this.three = new THREE.SphereGeometry(this.radius, this.widthSegments, this.heightSegments, this.phiStart, this.phiLength, this.thetaStart, this.thetaLength);
+                            var args = this.args.map(function(key) { return this[key]; }.bind(this));
+                            this.three = POLYTHREE.bindConstructor(THREE[this.type+"Geometry"], args);
                         }
                     }
                 };
             
-            ["radius", "widthSegments", "heightSegments", "phiStart", "phiLength", "thetaStart", "thetaLength"].forEach(function(key) {
-                ThreeSphere[key] = defaults[key];
+            geoms[type].forEach(function(key) { 
+                GeomPoly[key] = defaults[key];
             });
-                
-            Polymer("three-sphere", ThreeSphere);
-        } ());
-    </script>
-</polymer-element>
+            
+            Polymer("three-"+type.toLowerCase(), GeomPoly);
+            var el = document.createElement("div");
+            el.innerHTML = '\
+                <polymer-element name="three-'+type.toLowerCase()+'" attributes="'+geoms[type].join(" ")+'"></polymer-element>';
+            document.body.appendChild(el);
+        });
+    } ());
+</script>
