@@ -1,4 +1,4 @@
-POLYTHREE = {
+var POLYTHREE = {
     bindConstructor: function(constructor, args) {
         var factoryFunc = constructor.bind.apply(constructor, [null].concat(args));
         return new factoryFunc();
